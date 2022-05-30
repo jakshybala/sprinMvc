@@ -7,6 +7,13 @@
 <body>
 
 <p>Save new Person</p>
+<p>
+<ul>
+    <li><a href="/">Menu</a></li>
+
+</ul>
+<hr/>
+</p>
 <form th:method="POST" th:action="@{/people}" th:object="${savenewperson}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>

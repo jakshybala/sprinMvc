@@ -6,6 +6,13 @@
 </head>
 <body>
 <p>Update new Person</p>
+<p>
+<ul>
+    <li><a href="/">Menu</a></li>
+
+</ul>
+<hr/>
+</p>
 <form th:method="PATCH" th:action="@{/people/{id}(id=${personeditById.getId})}" th:object="${personeditById}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
