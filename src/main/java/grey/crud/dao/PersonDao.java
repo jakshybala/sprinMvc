@@ -3,14 +3,12 @@ package grey.crud.dao;
 import grey.crud.model.Person;
 import grey.crud.model.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
-
 import java.util.List;
+import java.util.Optional;
 
 /*
 grey.crud.dao
@@ -20,6 +18,7 @@ Tarih: 28.05.2022, Saat: 4:03, Author: Grey
 public class PersonDao {
 
     public final JdbcTemplate jdbcTemplate;
+
     @Autowired
     public PersonDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -35,6 +34,10 @@ public class PersonDao {
         return jdbcTemplate.query("SELECT * FROM Person WHERE id = ?", new Object[]{id}, new PersonMapper())
                 .stream().findAny().orElse(null);
 
+    }
+    public Optional<Person> showEmail(String email) {
+        return jdbcTemplate.query("SELECT * FROM Person WHERE email = ?", new Object[] {email},
+            new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
     }
 
     public void save(Person newPerson){

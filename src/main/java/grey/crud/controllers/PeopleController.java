@@ -2,6 +2,7 @@ package grey.crud.controllers;
 
 import grey.crud.dao.PersonDao;
 import grey.crud.model.Person;
+import grey.crud.util.PersonValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +18,11 @@ Tarih: 28.05.2022, Saat: 3:46, Author: Grey
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDao personDao;
+    private final PersonValidator personValidator;
 
-    public PeopleController(PersonDao personDao) {
+    public PeopleController(PersonDao personDao, PersonValidator personValidator) {
         this.personDao = personDao;
+        this.personValidator = personValidator;
     }
     @GetMapping()
     public String indexAllPeople(Model model) {
@@ -38,6 +41,7 @@ public class PeopleController {
     @PostMapping()
     public String createPerson(@ModelAttribute("savenewperson")
                                    @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/save";
         }
@@ -54,6 +58,7 @@ public class PeopleController {
     public String update(@ModelAttribute("personeditById")
                              @Valid Person person, BindingResult bindingResult,
                          @PathVariable("id") int id) throws Exception {
+        personValidator.validate(person, bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/edit";
         }
