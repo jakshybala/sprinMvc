@@ -6,8 +6,10 @@ Tarih: 16.06.2022, Saat: 21:10, Author: Grey
 */
 
 import grey.crud.model.Course;
+import grey.crud.model.Group;
 import grey.crud.model.Teacher;
 import grey.crud.services.CourseService;
+import grey.crud.services.GroupService;
 import grey.crud.services.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,57 +19,68 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api")
-public class TeacherController {
-    private final TeacherService teacherService;
+public class GroupController {
+    private final GroupService groupService;
     private final CourseService courseService;
+    private final TeacherService teacherService;
 
-    public TeacherController(TeacherService teacherService, CourseService courseService) {
-        this.teacherService = teacherService;
+
+    public GroupController(GroupService groupService, CourseService courseService, TeacherService teacherService) {
+        this.groupService = groupService;
         this.courseService = courseService;
+        this.teacherService = teacherService;
     }
-    @GetMapping("/teacher")
+
+
+
+    @GetMapping("/group")
     public String showAll(Model model){
-        model.addAttribute("allteachers", teacherService.showAll());
-        return "teachers/allteacher";
+        model.addAttribute("allgroup", groupService.showAll());
+        model.addAttribute("courselist", courseService.showAll());
+        return "group/allgroup";
 
     }
-    @GetMapping("/teacher/{id}")
+
+    @GetMapping("/group/{id}")
     public String showById(@PathVariable("id") int id,  Model model) {
-        model.addAttribute("showbyid", teacherService.getById(id));
-        return "teachers/byidteacher";
+        model.addAttribute("showbyid", groupService.getById(id));
+        return "group/byidgroup";
     }
     //create
-    @GetMapping("teacher/new")
-    public String createTeacher(Model model) {
-        model.addAttribute("createteacher", new Teacher());
+    @GetMapping("group/new")
+    public String createGroup(Model model) {
+        model.addAttribute("creategroup", new Group());
         List<Course> courseList = courseService.showAll();
-        model.addAttribute("coureslist", courseList);
-        return "teachers/saveteacher";
+        model.addAttribute("courseListpar", courseList);
+        return "group/savegroup";
     }
-    @PostMapping("/teacher")
-    public String saveTeacher(@ModelAttribute("createteacher") Teacher teacher) {
-        teacherService.creteTeacher(teacher);
-        return "redirect:/api/teacher";
+    @PostMapping("/group")
+    public String saveGroup(@ModelAttribute("creategroup") Group group) {
+       // group.setCourse1(courseService.getById(group.getCourseId()));
+        groupService.createGroup(group);
+        return "redirect:/api/group";
     }
-    @GetMapping("/teacher/{id}/edit")
-    public String editTeacher(@PathVariable("id") int id, Model model) {
-        model.addAttribute("teacheredit", teacherService.getById(id));
+    @GetMapping("/group/{id}/edit")
+    public String editGroup(@PathVariable("id") int id, Model model) {
+        model.addAttribute("groupedit", groupService.getById(id));
         List<Course> courseList = courseService.showAll();
-        model.addAttribute("coureslist", courseList);
-        return "/teachers/editteacher";
+        model.addAttribute("coureslistpar", courseList);
+//        model.addAttribute("selectedCourseid", courseService.selectedCourse(courseList));
+
+        return "/group/editgroup";
 
     }
-    @PostMapping("/teacher/{id}")
-    public String updateTeacher(@ModelAttribute("teacheredit") Teacher teacher,
+    @PostMapping("/group/{id}")
+    public String updateGroup(@ModelAttribute("groupupdate") Group group,
                                 @PathVariable("id") int id) {
-        teacherService.updateTeacher(id, teacher);
-        return "redirect:/api/teacher";
+        groupService.updateGroup(id, group);
+        return "redirect:/api/group";
 
     }
-    @DeleteMapping("/teacher/{id}")
-    public String deletTecher(@PathVariable("id") int id) {
-        teacherService.deletById(id);
-        return "redirect:/api/teacher";
+    @DeleteMapping("/group/{id}")
+    public String deletGroup(@PathVariable("id") int id) {
+        groupService.deletById(id);
+        return "redirect:/api/group";
     }
 
 }

@@ -1,7 +1,9 @@
 package grey.crud.services;
 
+import grey.crud.model.Course;
+import grey.crud.model.Group;
 import grey.crud.model.Teacher;
-import grey.crud.repositories.TeacherRepo;
+import grey.crud.repositories.GroupRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,33 +16,37 @@ Tarih: 16.06.2022, Saat: 22:03, Author: Grey
 */
 @Service
 @Transactional(readOnly = true)
-public class TeacherService {
+public class GroupService {
 
-    private final TeacherRepo teacherRepo;
+    private final GroupRepo groupRepo;
 
-    public TeacherService(TeacherRepo teacherRepo) {
-        this.teacherRepo = teacherRepo;
+    public GroupService(GroupRepo groupRepo) {
+        this.groupRepo = groupRepo;
     }
 
-    public List<Teacher> showAll() {
-        return teacherRepo.findAll();
+
+    public List<Group> showAll() {
+        return groupRepo.findAll();
     }
 
-    public Teacher getById(int id) {
-        Optional<Teacher> allById = teacherRepo.findById(id);
+    public Group getById(int id) {
+        Optional<Group> allById = groupRepo.findById(id);
         return allById.orElse(null);
     }
     @Transactional
-    public void creteTeacher(Teacher newTeacher) {
-        teacherRepo.save(newTeacher);
+    public void createGroup(Group newGroup) {
+        groupRepo.save(newGroup);
     }
     @Transactional
-    public void updateTeacher(int id, Teacher teacher) {
-        teacher.setId(id);
-        teacherRepo.save(teacher);
+    public void updateGroup(int id, Group updateGroup) {
+        updateGroup.setId(id);
+        groupRepo.save(updateGroup);
     }
     @Transactional
     public void deletById(int id) {
-        teacherRepo.deleteById(id);
+        groupRepo.deleteById(id);
     }
+//    public List<Group> findAllByCourseId(int courseId) {
+//        return groupRepo.findAllByCourseyId(courseId);
+//    }
 }

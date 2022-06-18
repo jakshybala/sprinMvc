@@ -1,8 +1,9 @@
 package grey.crud.controllers;
 
-import grey.crud.dao.PersonDao;
 import grey.crud.model.Person;
+import grey.crud.services.PersonService;
 import grey.crud.util.PersonValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,20 +18,21 @@ Tarih: 28.05.2022, Saat: 3:46, Author: Grey
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonDao personDao;
+    private final PersonService personService;
     private final PersonValidator personValidator;
-
-    public PeopleController(PersonDao personDao, PersonValidator personValidator) {
-        this.personDao = personDao;
+    @Autowired
+    public PeopleController(PersonService personService, PersonValidator personValidator) {
+        this.personService = personService;
         this.personValidator = personValidator;
     }
     @GetMapping()
     public String indexAllPeople(Model model) {
-        model.addAttribute("allPeople", personDao.indexOfAllPeople());
+        model.addAttribute("allPeople", personService.showAll());
         return "people/indexallpeople";   }
+
     @GetMapping("/{id}")
     public String showPeopleById(@PathVariable("id") int id, Model model) throws Exception {
-        model.addAttribute("personById", personDao.showById(id));
+        model.addAttribute("personById", personService.getById(id));
         return "people/showbyid";
     }
     @GetMapping("/new")
@@ -45,13 +47,13 @@ public class PeopleController {
         if(bindingResult.hasErrors()) {
             return "people/save";
         }
-        personDao.save(person);
+        personService.savePerson(person);
         return "redirect:/people";
 
     }
     @GetMapping("/{id}/edit")
     public String editMetod(Model model, @PathVariable("id") int id) throws Exception {
-        model.addAttribute("personeditById", personDao.showById(id));
+        model.addAttribute("personeditById", personService.getById(id));
         return "people/edit";
     }
     @PatchMapping("/{id}")
@@ -62,12 +64,12 @@ public class PeopleController {
         if(bindingResult.hasErrors()) {
             return "people/edit";
         }
-        personDao.update(id, person);
+        personService.updatePerson(id, person);
         return "redirect:/people";
     }
     @DeleteMapping("/{id}")
     public String deletPerson(@PathVariable("id") int id) {
-        personDao.delete(id);
+        personService.deletPerson(id);
         return "redirect:/people";
 
     }

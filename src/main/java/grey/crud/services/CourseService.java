@@ -1,11 +1,15 @@
 package grey.crud.services;
-import grey.crud.model.Person;
-import grey.crud.repositories.PersonRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import grey.crud.model.Company;
+import grey.crud.model.Course;
+import grey.crud.repositories.CompanyRepo;
+import grey.crud.repositories.CourseRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /*
 grey.crud.services
@@ -13,36 +17,41 @@ Tarih: 05.06.2022, Saat: 0:00, Author: Grey
 */
 @Service
 @Transactional(readOnly = true)
-public class PersonService {
+public class CourseService {
 
-    private final PersonRepo personRepo;
-    @Autowired
-    public PersonService(PersonRepo personRepo) {
-        this.personRepo = personRepo;
+    private final CourseRepo courseRepo;
+
+    public CourseService(CourseRepo courseRepo) {
+        this.courseRepo = courseRepo;
     }
 
-    public List<Person> showAll() {
-        return personRepo.findAll();
-
+    public List<Course> showAll() {
+        return courseRepo.findAll();
     }
-    public Person getById(int id) {
-        Optional<Person> findById = personRepo.findById(id);
+
+    public List<Course> findAllByCompanyId(int companyId) {
+        return courseRepo.findAllByCompanyId(companyId);
+    }
+    public Course getById(int id) {
+        Optional<Course> findById = courseRepo.findById(id);
         return findById.orElse(null);
 
     }
     @Transactional
-    public void savePerson(Person newCompany) {
-        personRepo.save(newCompany);
+    public void saveCourse(Course newCourse) {
+        courseRepo.save(newCourse);
     }
+
     @Transactional
-    public void updatePerson(int id, Person updatePerson) {
-        updatePerson.setId(id);
-        personRepo.save(updatePerson);
+    public void updateCourse(int id, Course updateCourse) {
+        updateCourse.setId(id);
+        courseRepo.save(updateCourse);
 
     }
     @Transactional
-    public void deletPerson(int id) {
-        personRepo.deleteById(id);
+    public void deleteCourse(int id) {
+        courseRepo.deleteById(id);
     }
+
 
 }

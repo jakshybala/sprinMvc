@@ -1,11 +1,9 @@
 package grey.crud.services;
-
-import grey.crud.model.Company;
-import grey.crud.repositories.CompanyRepo;
+import grey.crud.model.Person;
+import grey.crud.repositories.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,36 +13,36 @@ Tarih: 05.06.2022, Saat: 0:00, Author: Grey
 */
 @Service
 @Transactional(readOnly = true)
-public class CompanyService {
+public class PersonService {
 
-    private final CompanyRepo companyRepo;
+    private final PersonRepo personRepo;
     @Autowired
-    public CompanyService(CompanyRepo companyRepo) {
-        this.companyRepo = companyRepo;
+    public PersonService(PersonRepo personRepo) {
+        this.personRepo = personRepo;
     }
 
-    public List<Company> showAll() {
-        return companyRepo.findAll();
+    public List<Person> showAll() {
+        return personRepo.findAll();
 
     }
-    public Company getById(int id) {
-        Optional<Company> findById = companyRepo.findById(id);
+    public Person getById(int id) {
+        Optional<Person> findById = personRepo.findById(id);
         return findById.orElse(null);
 
     }
     @Transactional
-    public void saveCompany(Company newCompany) {
-        companyRepo.save(newCompany);
+    public void savePerson(Person newCompany) {
+        personRepo.save(newCompany);
     }
     @Transactional
-    public void updateCompany(int id, Company updateCompany) {
-        updateCompany.setId((long) id);
-        companyRepo.save(updateCompany);
+    public void updatePerson(int id, Person updatePerson) {
+        updatePerson.setId(id);
+        personRepo.save(updatePerson);
 
     }
     @Transactional
-    public void deletCompany(int id) {
-        companyRepo.deleteById(id);
+    public void deletPerson(int id) {
+        personRepo.deleteById(id);
     }
 
 }
