@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java-5</title>
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 100vw;
+            height: 100vh;
+            background-color: purple;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .text{
+            text-transform: capitalize;
+            color: purple;
+            width: 100%;
+
+        }
+        label{
+            color: purple;
+            text-transform: capitalize;
+            display:inline-block;
+
+        }
+        form{
+            background-color: white;
+            width: 200px;
+            border-radius: 10px;
+            display: flex;
+            flex-flow: row wrap;
+            padding: 0 25px;
+            justify-content: center;
+            padding-bottom: 20px;
+
+        }
+        .form_b{
+            border: 1px solid pink;
+            padding: 5px 20px;
+            color: peachpuff;
+            background-color: purple;
+            border-radius: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form_fp {
+            text-align: center;
+            width: 100%;
+            color: pink;
+            text-decoration: none;
+        }
+        .formContent{
+            margin: 50px auto;
+            text-align: center;
+            padding: 5px;
+        }
+        input{
+            padding: 5px 10px;
+            font-family: Arial;
+            outline: none;
+            border: 1px solid purple;
+        }
+        input {
+            padding: 5px 10px;
+            font-family: Arial;
+            outline: none;
+            border-radius: 25px;
+            border-color: pink;
+            width: calc(1 / 1 * 100%);
+            margin-bottom: 25px;
+        }
+
+        input:hover{
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="formContent">
+        <form>
+            <h1 class="text">login page</h1>
+            <label for="username"></label>
+            <input id="username" placeholder="Username" type="text"/>
+            <label for="password"></label>
+            <input id="password" placeholder="Password" type="password">
+            <button class="form_b">Login</button>
+            <a href="#" class="form_fp">Forgot password ?</a>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

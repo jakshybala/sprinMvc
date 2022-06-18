@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>Company page</title>
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">My First Application</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home Page <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<body>
+<div class="jumbotron">
+
+    <h1 class="display-4">Teacher Page</h1>
+
+    <p class="lead">This application for manipulation with course</p>
+
+    <hr class="my-4">
+    <div class="container">
+
+        <div class="row">
+            <div class="col">
+                <h3>
+                    <p class="font-weight-bold">Page </p>
+                    <!--    p tag takes up the entire width -->
+                    <p class="font-weight-bold" th:text="${showbyid.name}"></p>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-3">
+<table class="table table-dark table-hover">
+    <thead>
+    <tr class="table-active">
+
+        <th scope="col">Teacher Id</th>
+        <th scope="col">Teacher name</th>
+        <th scope="col">Teacher lastname</th>
+        <th scope="col">Teacher email</th>
+        <th scope="col">Group</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delet</th>
+        <th scope="col">Course Name</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td th:text="${showbyid.getId()}"></td>
+        <td th:text="${showbyid.name}"></td>
+        <td th:text="${showbyid.lastName}"></td>
+        <td th:text="${showbyid.email}"></td>
+        <td><a th:href="@{/api/group}">Group</a></td>
+        <td>
+            <a th:href="@{/api/teacher/{id}/edit(id=${showbyid.getId})}">Edit Teacher</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/api/teacher/{id}(id=${showbyid.getId()})}">
+                <input type="submit" value="Yes Delete!"/>
+            </form>
+        </td>
+        <td th:text="${showbyid.course.courseName}"></td>
+    </tr>
+
+    </tbody>
+</table>
+
+</div>
+<hr/>
+
+</body>
+</html>
